@@ -18,7 +18,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring([
-            '/store/user/cmsdas/2020/short_exercises/METAndPU/MC/handson1_dy1jet_madgraph_m50_autumn18_part.root',
+            'root://cmsxrootd.fnal.gov//store/user/cmsdas/2021/short_exercises/METandPU/DYJetsToLL_M50_amcatnloFXFX.root',
             ]
                                       )
     )
