@@ -16,13 +16,12 @@ process.TFileService = cms.Service("TFileService",
     closeFileFast = cms.untracked.bool(True)
 )
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring([
-            #'/store/user/cmsdas/2019/short_exercises/METAndPU/data/handson1_dylljets_amcatnlo.root',
-            '/store/mc/RunIIAutumn18MiniAOD/DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/102X_upgrade2018_realistic_v15-v1/80000/FFDCFC59-4ABE-0646-AABE-BD5D65301169.root',
+            'root://cmsxrootd.fnal.gov//store/user/cmsdas/2021/short_exercises/METandPU/DYJetsToLL_M50_amcatnloFXFX.root',
             ]
                                       )
     )

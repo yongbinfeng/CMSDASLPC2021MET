@@ -14,7 +14,7 @@ config.JobType.outputFiles = ['cmsdas_met_exercise3.root']
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
-config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAOD-PU2017_94X_mc2017_realistic_v11-v1/MINIAODSIM'
+config.Data.inputDataset = '/DYJetsToLL_M-50_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIISummer19UL18MiniAOD-106X_upgrade2018_realistic_v11_L1v1-v2/MINIAODSIM'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 #config.Data.splitting = 'Automatic'
@@ -25,9 +25,4 @@ config.Data.publication = False
 config.Data.outputDatasetTag = 'CRAB3_CMSDAS2020_TRY'
 
 config.section_("Site")
-#config.Site.whitelist = ['T3_US_FNALLPC']
-#config.Site.storageSite = 'T3_US_FNALLPC'
-config.Site.storageSite = 'T2_DE_RWTH'
-
-config.section_("User")
-config.User.voGroup = 'dcms'
+config.Site.storageSite = 'T3_US_FNALLPC'
