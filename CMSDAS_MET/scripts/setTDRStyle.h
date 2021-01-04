@@ -14,14 +14,14 @@
 /* } */
 
 void setTDRStyle() {
-  TStyle *tdrStyle = new TStyle("tdrStyle","Style for P-TDR");
+  TStyle *tdrStyle = new TStyle("tdrStyle", "Style for P-TDR");
 
   // For the canvas:
   tdrStyle->SetCanvasBorderMode(0);
   tdrStyle->SetCanvasColor(kWhite);
-  tdrStyle->SetCanvasDefH(600); //Height of canvas
-  tdrStyle->SetCanvasDefW(600); //Width of canvas
-  tdrStyle->SetCanvasDefX(0);   //POsition on screen
+  tdrStyle->SetCanvasDefH(600); // Height of canvas
+  tdrStyle->SetCanvasDefW(600); // Width of canvas
+  tdrStyle->SetCanvasDefX(0);   // POsition on screen
   tdrStyle->SetCanvasDefY(0);
 
   // For the Pad:
@@ -55,10 +55,10 @@ void setTDRStyle() {
   tdrStyle->SetEndErrorSize(2);
   //  tdrStyle->SetErrorMarker(20);
   //  tdrStyle->SetErrorY(0.);
-  
+
   tdrStyle->SetMarkerStyle(20);
 
-  //For the fit/function:
+  // For the fit/function:
   //  tdrStyle->SetOptFit(1);
   tdrStyle->SetOptFit(0);
   tdrStyle->SetFitFormat("5.4g");
@@ -66,7 +66,7 @@ void setTDRStyle() {
   tdrStyle->SetFuncStyle(1);
   tdrStyle->SetFuncWidth(1);
 
-  //For the date:
+  // For the date:
   tdrStyle->SetOptDate(0);
   // tdrStyle->SetDateX(Float_t x = 0.01);
   // tdrStyle->SetDateY(Float_t y = 0.01);
@@ -112,8 +112,8 @@ void setTDRStyle() {
   tdrStyle->SetTitleColor(1, "XYZ");
   tdrStyle->SetTitleFont(42, "XYZ");
   tdrStyle->SetTitleSize(0.06, "XYZ");
-  // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the size?
-  // tdrStyle->SetTitleYSize(Float_t size = 0.02);
+  // tdrStyle->SetTitleXSize(Float_t size = 0.02); // Another way to set the
+  // size? tdrStyle->SetTitleYSize(Float_t size = 0.02);
   tdrStyle->SetTitleXOffset(0.9);
   tdrStyle->SetTitleYOffset(1.25);
   // tdrStyle->SetTitleOffset(1.1, "Y"); // Another way to set the Offset
@@ -131,7 +131,7 @@ void setTDRStyle() {
   tdrStyle->SetStripDecimals(kTRUE);
   tdrStyle->SetTickLength(0.03, "XYZ");
   tdrStyle->SetNdivisions(510, "XYZ");
-  tdrStyle->SetPadTickX(1);  // To get tick marks on the opposite side of the frame
+  tdrStyle->SetPadTickX(1); // To get tick marks on the opposite side of the frame
   tdrStyle->SetPadTickY(1);
 
   // Change for log plots:
@@ -140,7 +140,7 @@ void setTDRStyle() {
   tdrStyle->SetOptLogz(0);
 
   // Postscript options:
-  tdrStyle->SetPaperSize(20.,20.);
+  tdrStyle->SetPaperSize(20., 20.);
   // tdrStyle->SetLineScalePS(Float_t scale = 3);
   // tdrStyle->SetLineStyleString(Int_t i, const char* text);
   // tdrStyle->SetHeaderPS(const char* header);
@@ -155,5 +155,4 @@ void setTDRStyle() {
   gStyle->SetPalette(1);
 
   tdrStyle->cd();
-
 }
