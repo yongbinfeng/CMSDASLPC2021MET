@@ -11,18 +11,18 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 class ExampleAnalysis(Module):
     def __init__(self):
-	self.writeHistFile=True
-	self.puppimetBranchName= "PuppiMET"
-	self.rawmetBranchName= "RawMET"
-	self.pfmetBranchName= "MET"
+        self.writeHistFile=True
+        self.puppimetBranchName= "PuppiMET"
+        self.rawmetBranchName= "RawMET"
+        self.pfmetBranchName= "MET"
         self.flagBranchName= "Flag"
 
     def beginJob(self,histFile=None,histDirName=None):
-	Module.beginJob(self,histFile,histDirName)
+        Module.beginJob(self,histFile,histDirName)
 
-	self.h_rawmet=ROOT.TH1F('rawmet',   'rawmet',   25, 0, 500)
-	self.h_pfmet=ROOT.TH1F('pfmet',   'pfmet',   25, 0, 500)
-	self.h_puppimet=ROOT.TH1F('puppimet',   'puppimet',   25, 0, 500)
+        self.h_rawmet=ROOT.TH1F('rawmet',   'rawmet',   25, 0, 500)
+        self.h_pfmet=ROOT.TH1F('pfmet',   'pfmet',   25, 0, 500)
+        self.h_puppimet=ROOT.TH1F('puppimet',   'puppimet',   25, 0, 500)
         self.addObject(self.h_rawmet )
         self.addObject(self.h_pfmet )
         self.addObject(self.h_puppimet )
@@ -40,12 +40,12 @@ class ExampleAnalysis(Module):
         if (flag.goodVertices  == False or flag.HBHENoiseFilter == False or flag.HBHENoiseIsoFilter  == False or flag.EcalDeadCellTriggerPrimitiveFilter  == False or  flag.BadPFMuonFilter  == False or flag.ecalBadCalibFilter == False) : return False
 
 
-	#select events with at least 2 muons
-	if len(muons) >=2 :
-          
-	  self.h_rawmet.Fill(rawmet.pt) #fill histogram
-          self.h_pfmet.Fill(pfmet.pt) #fill histogram
-	  self.h_puppimet.Fill(puppimet.pt) #fill histogram
+        #select events with at least 2 muons
+        if len(muons) >=2 :
+
+            self.h_rawmet.Fill(rawmet.pt) #fill histogram
+            self.h_pfmet.Fill(pfmet.pt) #fill histogram
+            self.h_puppimet.Fill(puppimet.pt) #fill histogram
         return True
 
 
