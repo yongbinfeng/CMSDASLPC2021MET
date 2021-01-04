@@ -4,8 +4,6 @@ import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 from importlib import import_module
 from PhysicsTools.NanoAODTools.postprocessing.framework.postprocessor import PostProcessor
-
-
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection, Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
@@ -20,9 +18,13 @@ class ExampleAnalysis(Module):
     def beginJob(self,histFile=None,histDirName=None):
         Module.beginJob(self,histFile,histDirName)
 
-        self.h_rawmet=ROOT.TH1F('rawmet',   'rawmet',   25, 0, 500)
-        self.h_pfmet=ROOT.TH1F('pfmet',   'pfmet',   25, 0, 500)
-        self.h_puppimet=ROOT.TH1F('puppimet',   'puppimet',   25, 0, 500)
+        self.h_dimuonmass=ROOT.TH1F("dimuon_mass", "dimuon_mass", 60, 60, 120)
+        self.h_zpt=ROOT.TH1F("z_pt", "z pt", 60, 0, 60)
+        self.h_rawmet=ROOT.TH1F('rawmet',   'rawmet',   100, 0, 50)
+        self.h_pfmet=ROOT.TH1F('pfmet',   'pfmet',   100, 0, 50)
+        self.h_puppimet=ROOT.TH1F('puppimet',   'puppimet',   100, 0, 50)
+        self.addObject(self.h_dimuonmass)
+        self.addObject(self.h_zpt)
         self.addObject(self.h_rawmet )
         self.addObject(self.h_pfmet )
         self.addObject(self.h_puppimet )
@@ -35,23 +37,32 @@ class ExampleAnalysis(Module):
         puppimet = Object(event, self.puppimetBranchName)
         flag= Object(event,self.flagBranchName)
 
-
         #print flag.goodVertices, flag.HBHENoiseFilter, flag.HBHENoiseIsoFilter, flag.EcalDeadCellTriggerPrimitiveFilter, flag.BadPFMuonFilter, flag.ecalBadCalibFilter
         if (flag.goodVertices  == False or flag.HBHENoiseFilter == False or flag.HBHENoiseIsoFilter  == False or flag.EcalDeadCellTriggerPrimitiveFilter  == False or  flag.BadPFMuonFilter  == False or flag.ecalBadCalibFilter == False) : return False
 
+        mu0 = ROOT.TLorentzVector()
+        mu0.SetPtEtaPhiM(muons[0].pt, muons[0].eta, muons[0].phi, muons[0].mass)
+        mu1 = ROOT.TLorentzVector()
+        mu1.SetPtEtaPhiM(muons[1].pt, muons[1].eta, muons[1].phi, muons[1].mass)
+
+        mass_dimuon = (mu0 + mu1).M()
+        zpt = (mu0 + mu1).Pt()
+        self.h_dimuonmass.Fill(mass_dimuon)
 
         #select events with at least 2 muons
-        if len(muons) >=2 :
-
+        if abs(mass_dimuon-91.0) < 10.0:
+            self.h_zpt.Fill(zpt)
             self.h_rawmet.Fill(rawmet.pt) #fill histogram
             self.h_pfmet.Fill(pfmet.pt) #fill histogram
             self.h_puppimet.Fill(puppimet.pt) #fill histogram
         return True
 
 
-preselection="Jet_pt[0] > 250"
-files=["root://cms-xrd-global.cern.ch//store/mc/RunIIAutumn18NanoAODv6/TTJets_DiLept_TuneCP5_13TeV-madgraphMLM-pythia8/NANOAODSIM/Nano25Oct2019_102X_upgrade2018_realistic_v20-v1/60000/AF2405EC-2325-3A44-B7C2-AE7616557973.root"]
-#files=[" root://cms-xrd-global.cern.ch//store/mc/RunIISummer16NanoAOD/TTJets_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/NANOAODSIM/PUMoriond17_05Feb2018_94X_mcRun2_asymptotic_v2-v1/40000/2CE738F9-C212-E811-BD0E-EC0D9A8222CE.root"]
+files=[
+    "root://cmsxrootd.fnal.gov//store/user/cmsdas/2021/short_exercises/METandPU/DYJetsToLL_M50_amcatnloFXFX_Nano.root",
+]
+
+preselection="nMuon >= 2 && Muon_pt[0] > 25.0 && Muon_pt[1] > 25.0 && fabs(Muon_eta[0]) < 2.4 && fabs(Muon_eta[1]) < 2.4 && Muon_pfRelIso04_all[0] < 0.15 && Muon_pfRelIso04_all[1] < 0.15"
 p=PostProcessor(".",files,cut=preselection,branchsel=None,modules=[ExampleAnalysis()],noOut=True,histFileName="histOut.root",histDirName="plots")
 p.run()
 
